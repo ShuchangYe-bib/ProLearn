@@ -1,0 +1,45 @@
+TRAIN:
+  seed: 42
+
+  batch_size: 32
+  lr: 0.0001
+
+  image_size: [224,224]
+
+  min_epochs: 30
+  max_epochs: 50
+  patience: 20
+
+  device: cuda
+  num_workers: 16
+
+  model_save_path: ./trained_weights
+  model_save_filename: prolearn
+  checkpoint_path: None
+
+PSA:
+  prototype_save_path: ./prototypes
+  prototype_save_filename: prototype
+  num_classes: 6
+  num_prototypes: 2
+  prototype_dim: 1024
+  num_candidate: 3
+  agg: attention
+
+CLIP:
+  bert_length: 256
+  clip_dim: 512
+  feature_dim: 768
+
+MODEL:
+  bert_type: microsoft/BiomedVLP-CXR-BERT-specialized
+  vision_type: facebook/convnext-tiny-224
+  project_dim: 768
+  text_len: 256
+  text_dim: 512
+
+DATA:
+  dataset_name: QaTa
+  ann_path: ./data/QaTa/split.json
+  root_path: ./data/QaTa/
+  lazy: True
