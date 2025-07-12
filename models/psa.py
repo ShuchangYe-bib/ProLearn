@@ -114,7 +114,7 @@ class PSA(nn.Module):
             filename_proto = f"{self.args.prototype_save_path}/{self.args.prototype_save_filename}_{self.args.dataset_name.lower()}_{self.args.num_classes}_{self.args.num_prototypes}_{self.args.prototype_dim}_{self.pretrain}.pkl"
             filename_clip = filename_proto.replace('.pkl', '.pth')
 
-        if os.path.exists(filename_proto) and os.path.exists(filename_clip):
+        if os.path.exists(filename_proto):
             print(f"[✓] Loading prototypes from {filename_proto}")
             with open(filename_proto, 'rb') as f:
                 state = pickle.load(f)
@@ -128,7 +128,7 @@ class PSA(nn.Module):
 
             return True
         else:
-            print(f"[✗] Missing prototype file: {filename_proto} or {filename_clip}")
+            print(f"[✗] Missing prototype file: {filename_proto}")
             return False
 
     def similarity(self, matrix_slice, img_feat, similarity_type='cosine'):
@@ -216,37 +216,3 @@ class PSA(nn.Module):
             return self.approx(agg_feat.to(image_feature.device), image_feature)
         return agg_feat.to(images.device)
 
-    def visualize(self, reduction_method="t-SNE", n_components=2, save_path="vector_space_visualization.png"):
-        """
-        Visualize the learned prototype matrix in 2D or 3D space.
-        """
-        import numpy as np
-        import matplotlib.pyplot as plt
-        from sklearn.decomposition import PCA
-        from sklearn.manifold import TSNE
-        from mpl_toolkits.mplot3d import Axes3D
-
-        mat = self.matrix.detach().cpu().numpy().reshape(-1, self.matrix.shape[-1])
-        labels = np.repeat(np.arange(self.args.num_classes), self.args.num_prototypes)
-
-        reducer = TSNE(n_components=n_components, random_state=42) if reduction_method == "t-SNE" else PCA(n_components=n_components)
-        reduced = reducer.fit_transform(mat)
-
-        plt.figure(figsize=(12, 8))
-        if n_components == 2:
-            for i in range(self.args.num_classes):
-                idx = labels == i
-                plt.scatter(reduced[idx, 0], reduced[idx, 1], label=f"Class {i}", alpha=0.7)
-            plt.xlabel("Dim 1"), plt.ylabel("Dim 2"), plt.legend()
-        elif n_components == 3:
-            ax = plt.figure().add_subplot(111, projection='3d')
-            for i in range(self.args.num_classes):
-                idx = labels == i
-                ax.scatter(reduced[idx, 0], reduced[idx, 1], reduced[idx, 2], label=f"Class {i}", alpha=0.7)
-            ax.set_xlabel("Dim 1"), ax.set_ylabel("Dim 2"), ax.set_zlabel("Dim 3"), ax.legend()
-
-        plt.title(f"Prototype Space ({reduction_method})")
-        plt.grid(True)
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")
-        plt.close()
-        return save_path
