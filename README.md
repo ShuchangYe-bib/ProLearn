@@ -19,5 +19,7 @@ First, clone this repository to your local machine and install the dependencies.
 ```bash
 git clone git@github.com:ShuchangYe-bib/ProLearn.git
 cd ProLearn
+conda create --name prolearn python=3.11
+conda activate prolearn
 pip install -r requirements.txt
 ```

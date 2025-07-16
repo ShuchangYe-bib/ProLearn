@@ -21,7 +21,7 @@ PSA:
   prototype_save_path: ./prototypes
   prototype_save_filename: prototype
   num_classes: 6
-  num_prototypes: 2
+  num_prototypes: 16
   prototype_dim: 1024
   num_candidate: 3
   agg: attention
