@@ -24,9 +24,7 @@
 
 🧠 **ProLearn**: the first prototype-driven learning framework that enables 1) image-only, image-text data mix training; 2) inference with limited or no textual input.
 
-<p align="center">
-  <img src="static/images/visualization.svg" width="85%">
-</p>
+![ProLearn](./assets/figures/prolearn.svg)
 
 ---
 
@@ -34,9 +32,7 @@
 
 To simulate real-world incomplete pairing, we train ProLearn with only **1% to 50%** paired text data and compare it with SOTA language-guided models. Unlike others, **ProLearn maintains performance even under extreme text scarcity**.
 
-<p align="center">
-  <img src="https://shuchangye-bib.github.io/websites/ProLearn/static/images/degradation.svg" width="50%">
-</p>
+![Degradation](./assets/figures/degradation.svg)
 
 ---
 
@@ -44,9 +40,7 @@ To simulate real-world incomplete pairing, we train ProLearn with only **1% to 5
 
 ProLearn produces robust and localized segmentation maps, even without text. Its **PSA module** preserves attention saliency and lesion coherence — outperforming baselines like SGSeg and LViT.
 
-<p align="center">
-  <img src="https://shuchangye-bib.github.io/websites/ProLearn/static/images/visualization.svg" width="90%">
-</p>
+![Visualization](./assets/figures/visualization.svg)
 
 ---
 
