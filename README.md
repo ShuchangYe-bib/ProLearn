@@ -35,7 +35,7 @@
 To simulate real-world incomplete pairing, we train ProLearn with only **1% to 50%** paired text data and compare it with SOTA language-guided models. Unlike others, **ProLearn maintains performance even under extreme text scarcity**.
 
 <p align="center">
-  <img src="static/images/degradation.svg" width="75%">
+  <img src="https://shuchangye-bib.github.io/websites/ProLearn/static/images/degradation.svg" width="50%">
 </p>
 
 ---
@@ -45,8 +45,23 @@ To simulate real-world incomplete pairing, we train ProLearn with only **1% to 5
 ProLearn produces robust and localized segmentation maps, even without text. Its **PSA module** preserves attention saliency and lesion coherence — outperforming baselines like SGSeg and LViT.
 
 <p align="center">
-  <img src="static/images/visualization.svg" width="80%">
+  <img src="https://shuchangye-bib.github.io/websites/ProLearn/static/images/visualization.svg" width="90%">
 </p>
+
+---
+
+## Prototype zoo
+We provide prototypes for you to play with:
+
+
+| Dataset    | Surrogate_labels | Prototypes/label | Dimension  | Size   | Weights   |
+|:----------:|:----------------:|:----------------:|:----------:|:------:|:----------|
+| QaTa-COV19 |        6         |        2         |    1024    |  9.5MB | [prototype_qata_6_2_1024](https://github.com/ShuchangYe-bib/ProLearn/blob/main/prototypes/prototype_qata_6_2_1024_contrastive.pkl) |
+| QaTa-COV19 |        6         |        4         |    1024    |   19MB | [prototype_qata_6_4_1024](https://github.com/ShuchangYe-bib/ProLearn/blob/main/prototypes/prototype_qata_6_4_1024_contrastive.pkl) |
+| QaTa-COV19 |        6         |        8         |    1024    | 37.9MB | [prototype_qata_6_8_1024](https://github.com/ShuchangYe-bib/ProLearn/blob/main/prototypes/prototype_qata_6_8_1024_contrastive.pkl) |
+| QaTa-COV19 |        6         |       16         |    1024    | 75.9MB | [prototype_qata_6_16_1024](https://github.com/ShuchangYe-bib/ProLearn/blob/main/prototypes/prototype_qata_6_16_1024_contrastive.pkl) |
+
+All files available at: [./prototypes](https://github.com/ShuchangYe-bib/ProLearn/tree/main/prototypes)
 
 ---
 
@@ -62,7 +77,40 @@ conda activate prolearn
 pip install -r requirements.txt
 ```
 
+Now, train and test the model with just few lines of code:
+
+```bash
+python3 train.py
+python3 test.py
+```
+
 ---
+
+## Training
+
+1. To finetune our pretrain model, specify the path of the pretrained model in ```checkpoint_path``` parameter in ```config/training.yaml```
+OR
+To train our model from scratch, set the ```checkpoint_path``` parameter in ```config/training.yaml``` to ```None```
+
+2. Customize the following parameters in ```config/training.yaml``` for customized training process:
+- ```train_batch_size``` -  the number of samples to be processed in an epoch
+- ```image_size``` - tuple of ```(H, W)```
+- ```min_epochs``` - minimum epochs of training (unaffected by validation metric)
+- ```max_epochs``` - maximum epochs of training
+- ```patience``` - the number of epochs to wait before discontinuing the training process if the validation metric has not improved
+
+3. Run ```python3 train.py```
+
+## Test
+To evaluate the performance of our model:
+1. Specify the path of the pretrained model in ```checkpoint_path``` parameter in ```config/training.yaml```
+
+2. Run evaluation ```python3 test.py```
+
+---
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📚 Citation
 
